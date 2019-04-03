@@ -1,0 +1,5 @@
+sgconv/
+projects/*
+
+!projects/sgconv.vcxproj
+!projects/sgconv.vcxproj.filters
