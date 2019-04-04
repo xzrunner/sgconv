@@ -626,15 +626,14 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             }
             custom->SetInternalStr(code);
 
+            std::string custom_expression_name;
+            if (QueryString(src, "custom_expression_name", custom_expression_name)) {
+                custom->SetName(custom_expression_name);
+            }
+
             std::vector<sg::Node::PinsDesc> inputs, outputs;
             InputPortASEImpToSG(inputs, src.inputs);
             OutputPortASEImpToSG(outputs, src.outputs);
-
-            int input_count = CheckInt(src, "input_count");
-            assert(input_count == inputs.size());
-            for (int i = 0; i < input_count; ++i) {
-                inputs[i].name = CheckString(src, "input" + std::to_string(i));
-            }
 
             custom->ResetPorts(inputs, outputs);
 
