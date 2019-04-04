@@ -615,6 +615,17 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         {
             auto custom = std::make_shared<sg::node::Custom>();
 
+            std::string code = CheckString(src, "code");
+            for (auto& c : code) {
+                if (c == '$') {
+                    c = '\n';
+                }
+                if (c == '@') {
+                    c = ';';
+                }
+            }
+            custom->SetInternalStr(code);
+
             std::vector<sg::Node::PinsDesc> inputs, outputs;
             InputPortASEImpToSG(inputs, src.inputs);
             OutputPortASEImpToSG(outputs, src.outputs);
