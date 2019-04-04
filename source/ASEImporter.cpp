@@ -666,14 +666,12 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             }
 
             std::string text;
-            if (QueryString(src, "text", text))
-            {
-                if (text.empty()) {
-                    if (QueryString(src, "title", text)) {
-                        text = cpputil::StringHelper::UTF8ToGBK(text.c_str());
-                        comm->SetCommentText(text);
-                    }
-                }
+            if (QueryString(src, "text", text)) {
+                comm->SetCommentText(text);
+            }
+            std::string title;
+            if (QueryString(src, "title", title)) {
+                comm->SetCommentTitle(title);
             }
 
             bp_node = comm;
