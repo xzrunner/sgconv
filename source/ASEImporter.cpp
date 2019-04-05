@@ -17,7 +17,7 @@
 #include <blueprint/node/Switch.h>
 #include <blueprint/node/SwitchMulti.h>
 #include <shadergraph/RegistNodes.h>
-#include <shadergraph/PinsType.h>
+#include <shadergraph/PinType.h>
 #include <shadergraph/ReflectPropTypes.h>
 #include <shadergraph/node/Custom.h>
 #include <shadergraph/node/StandardSurfaceOutput.h>
@@ -631,7 +631,7 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
                 custom->SetName(custom_expression_name);
             }
 
-            std::vector<sg::Node::PinsDesc> inputs, outputs;
+            std::vector<sg::Node::PinDesc> inputs, outputs;
             InputPortASEImpToSG(inputs, src.inputs);
             OutputPortASEImpToSG(outputs, src.outputs);
 
@@ -800,35 +800,35 @@ void ASEImporter::CreateSceneNode(const bp::NodePtr& bp_node, const sm::vec2& po
 
 int ASEImporter::PortTypeASEImpToBP(aseimp::WirePortDataType type)
 {
-    int ret = bp::PINS_ANY_VAR;
+    int ret = bp::PIN_ANY_VAR;
     switch (type)
     {
     case aseimp::WirePortDataType::FLOAT:
-        ret = sg::PINS_VECTOR1;
+        ret = sg::PIN_VECTOR1;
         break;
     case aseimp::WirePortDataType::FLOAT2:
-        ret = sg::PINS_VECTOR2;
+        ret = sg::PIN_VECTOR2;
         break;
     case aseimp::WirePortDataType::FLOAT3:
-        ret = sg::PINS_VECTOR3;
+        ret = sg::PIN_VECTOR3;
         break;
     case aseimp::WirePortDataType::FLOAT4:
-        ret = sg::PINS_VECTOR4;
+        ret = sg::PIN_VECTOR4;
         break;
     case aseimp::WirePortDataType::COLOR:
-        ret = sg::PINS_COLOR;
+        ret = sg::PIN_COLOR;
         break;
     case aseimp::WirePortDataType::SAMPLER2D:
-        ret = sg::PINS_TEXTURE2D;
+        ret = sg::PIN_TEXTURE2D;
         break;
     case aseimp::WirePortDataType::FLOAT3x3:
-        ret = sg::PINS_MATRIX3;
+        ret = sg::PIN_MATRIX3;
         break;
     case aseimp::WirePortDataType::FLOAT4x4:
-        ret = sg::PINS_MATRIX4;
+        ret = sg::PIN_MATRIX4;
         break;
     case aseimp::WirePortDataType::OBJECT:
-        ret = bp::PINS_ANY_VAR;
+        ret = bp::PIN_ANY_VAR;
         break;
     default:
         assert(0);
@@ -836,7 +836,7 @@ int ASEImporter::PortTypeASEImpToBP(aseimp::WirePortDataType type)
     return ret;
 }
 
-void ASEImporter::InputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
+void ASEImporter::InputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
                                       const std::vector<aseimp::FileLoader::InputPort>& src)
 {
     dst.resize(src.size());
@@ -849,7 +849,7 @@ void ASEImporter::InputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
     }
 }
 
-void ASEImporter::OutputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
+void ASEImporter::OutputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
                                        const std::vector<aseimp::FileLoader::OutputPort>& src)
 {
     dst.resize(src.size());

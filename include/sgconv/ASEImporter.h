@@ -30,9 +30,9 @@ private:
     void CreateSceneNode(const bp::NodePtr& bp_node, const sm::vec2& pos);
 
     static int PortTypeASEImpToBP(aseimp::WirePortDataType type);
-    static void InputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
+    static void InputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
         const std::vector<aseimp::FileLoader::InputPort>& src);
-    static void OutputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
+    static void OutputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
         const std::vector<aseimp::FileLoader::OutputPort>& src);
 
 private:
