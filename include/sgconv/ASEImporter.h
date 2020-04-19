@@ -19,13 +19,13 @@ class ASEImporter
 public:
     ASEImporter();
 
-    void LoadAsset(const std::string& filepath);
-    void LoadShader(const std::string& filepath);
+    void LoadAsset(const ur2::Device& dev, const std::string& filepath);
+    void LoadShader(const ur2::Device& dev, const std::string& filepath);
 
     auto& GetNodes() const { return m_scene_nodes; }
 
 private:
-    void Load(const aseimp::FileLoader& loader);
+    void Load(const ur2::Device& dev, const aseimp::FileLoader& loader);
 
     void CreateSceneNode(const bp::NodePtr& bp_node, const sm::vec2& pos);
 

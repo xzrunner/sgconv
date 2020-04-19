@@ -130,15 +130,15 @@ ASEImporter::ASEImporter()
     aseimp::regist_rttr_typedef();
 }
 
-void ASEImporter::LoadAsset(const std::string& filepath)
+void ASEImporter::LoadAsset(const ur2::Device& dev, const std::string& filepath)
 {
     aseimp::FileLoader loader;
     loader.LoadAsset(filepath);
 
-    Load(loader);
+    Load(dev, loader);
 }
 
-void ASEImporter::LoadShader(const std::string& filepath)
+void ASEImporter::LoadShader(const ur2::Device& dev, const std::string& filepath)
 {
     auto dir = boost::filesystem::path(filepath).parent_path().string();
     ee0::AssetsMap::Instance()->LoadDirWithUnity(dir);
@@ -146,10 +146,10 @@ void ASEImporter::LoadShader(const std::string& filepath)
     aseimp::FileLoader loader;
     loader.LoadShader(filepath);
 
-    Load(loader);
+    Load(dev, loader);
 }
 
-void ASEImporter::Load(const aseimp::FileLoader& loader)
+void ASEImporter::Load(const ur2::Device& dev, const aseimp::FileLoader& loader)
 {
     for (auto& src : loader.GetNodes())
     {
@@ -298,7 +298,7 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
                 {
                     func->SetFilepath(filepath);
                     ASEImporter loader;
-                    loader.LoadAsset(filepath);
+                    loader.LoadAsset(dev, filepath);
                     func->SetChildren(func, loader.GetNodes());
                 }
                 else
