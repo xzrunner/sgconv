@@ -16,12 +16,12 @@
 #include <blueprint/node/CompareNotEqual.h>
 #include <blueprint/node/Switch.h>
 #include <blueprint/node/SwitchMulti.h>
-#include <shadergraph/RegistNodes.h>
-#include <shadergraph/PinType.h>
-#include <shadergraph/ReflectPropTypes.h>
-#include <shadergraph/node/Custom.h>
-#include <shadergraph/node/StandardSurfaceOutput.h>
-#include <shadergraph/node/Tex2DAsset.h>
+#include <shaderlab/RegistNodes.h>
+#include <shaderlab/PinType.h>
+#include <shaderlab/ReflectPropTypes.h>
+#include <shaderlab/node/Custom.h>
+#include <shaderlab/node/StandardSurfaceOutput.h>
+#include <shaderlab/node/Tex2DAsset.h>
 
 #include <cpputil/StringHelper.h>
 #include <node0/SceneNode.h>
@@ -159,80 +159,80 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         {
             // Math Operators
         case aseimp::NodeClass::Absolute:
-            bp_node = std::make_shared<sg::node::Absolute>();
+            bp_node = std::make_shared<shaderlab::node::Absolute>();
             break;
         case aseimp::NodeClass::Saturate:
-            bp_node = std::make_shared<sg::node::Saturate>();
+            bp_node = std::make_shared<shaderlab::node::Saturate>();
             break;
         case aseimp::NodeClass::Minimum:
-            bp_node = std::make_shared<sg::node::Minimum>();
+            bp_node = std::make_shared<shaderlab::node::Minimum>();
             break;
         case aseimp::NodeClass::Maximum:
-            bp_node = std::make_shared<sg::node::Maximum>();
+            bp_node = std::make_shared<shaderlab::node::Maximum>();
             break;
         case aseimp::NodeClass::Add:
-            bp_node = std::make_shared<sg::node::Add>();
+            bp_node = std::make_shared<shaderlab::node::Add>();
             bp_node->PrepareExtInputPorts(src.inputs.size());
             break;
         case aseimp::NodeClass::Subtract:
-            bp_node = std::make_shared<sg::node::Subtract>();
+            bp_node = std::make_shared<shaderlab::node::Subtract>();
             break;
         case aseimp::NodeClass::Multiply:
-            bp_node = std::make_shared<sg::node::Multiply>();
+            bp_node = std::make_shared<shaderlab::node::Multiply>();
             bp_node->PrepareExtInputPorts(src.inputs.size());
             break;
         case aseimp::NodeClass::Divide:
-            bp_node = std::make_shared<sg::node::Divide>();
+            bp_node = std::make_shared<shaderlab::node::Divide>();
             break;
         case aseimp::NodeClass::OneMinus:
-            bp_node = std::make_shared<sg::node::OneMinus>();
+            bp_node = std::make_shared<shaderlab::node::OneMinus>();
             break;
         case aseimp::NodeClass::Remap:
-            bp_node = std::make_shared<sg::node::Remap>();
+            bp_node = std::make_shared<shaderlab::node::Remap>();
             break;
         case aseimp::NodeClass::Exp2:
         {
-            auto exp = std::make_shared<sg::node::Exponential>();
-            exp->SetType(sg::PropMathBaseType::BASE_2);
+            auto exp = std::make_shared<shaderlab::node::Exponential>();
+            exp->SetType(shaderlab::PropMathBaseType::BASE_2);
             bp_node = exp;
         }
             break;
         case aseimp::NodeClass::ExpE:
         {
-            auto exp = std::make_shared<sg::node::Exponential>();
-            exp->SetType(sg::PropMathBaseType::BASE_E);
+            auto exp = std::make_shared<shaderlab::node::Exponential>();
+            exp->SetType(shaderlab::PropMathBaseType::BASE_E);
             bp_node = exp;
         }
             break;
         case aseimp::NodeClass::Power:
-            bp_node = std::make_shared<sg::node::Power>();
+            bp_node = std::make_shared<shaderlab::node::Power>();
             break;
         case aseimp::NodeClass::ScaleAndOffset:
-            bp_node = std::make_shared<sg::node::ScaleAndOffset>();
+            bp_node = std::make_shared<shaderlab::node::ScaleAndOffset>();
             break;
         case aseimp::NodeClass::Lerp:
-            bp_node = std::make_shared<sg::node::Lerp>();
+            bp_node = std::make_shared<shaderlab::node::Lerp>();
             break;
         case aseimp::NodeClass::Smoothstep:
-            bp_node = std::make_shared<sg::node::Smoothstep>();
+            bp_node = std::make_shared<shaderlab::node::Smoothstep>();
             break;
         case aseimp::NodeClass::FWidth:
-            bp_node = std::make_shared<sg::node::FWidth>();
+            bp_node = std::make_shared<shaderlab::node::FWidth>();
             break;
         case aseimp::NodeClass::Sine:
-            bp_node = std::make_shared<sg::node::Sine>();
+            bp_node = std::make_shared<shaderlab::node::Sine>();
             break;
         case aseimp::NodeClass::Cosine:
-            bp_node = std::make_shared<sg::node::Cosine>();
+            bp_node = std::make_shared<shaderlab::node::Cosine>();
             break;
         case aseimp::NodeClass::Tangent:
-            bp_node = std::make_shared<sg::node::Tangent>();
+            bp_node = std::make_shared<shaderlab::node::Tangent>();
             break;
         case aseimp::NodeClass::Arcsine:
-            bp_node = std::make_shared<sg::node::Arcsine>();
+            bp_node = std::make_shared<shaderlab::node::Arcsine>();
             break;
         case aseimp::NodeClass::Arccosine:
-            bp_node = std::make_shared<sg::node::Arccosine>();
+            bp_node = std::make_shared<shaderlab::node::Arccosine>();
             break;
 
             // Logical Operators
@@ -314,7 +314,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             // Constants And Properties
         case aseimp::NodeClass::Float:
         {
-            auto vec1 = std::make_shared<sg::node::Vector1>();
+            auto vec1 = std::make_shared<shaderlab::node::Vector1>();
 
             std::string name;
             if (QueryString(src, "name", name)) {
@@ -330,7 +330,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::Vector2:
         {
-            auto vec2 = std::make_shared<sg::node::Vector2>();
+            auto vec2 = std::make_shared<shaderlab::node::Vector2>();
 
             std::string name;
             if (QueryString(src, "name", name)) {
@@ -347,7 +347,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::Vector3:
         {
-            auto vec3 = std::make_shared<sg::node::Vector3>();
+            auto vec3 = std::make_shared<shaderlab::node::Vector3>();
 
             std::string name;
             if (QueryString(src, "name", name)) {
@@ -365,7 +365,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::Vector4:
         {
-            auto vec4 = std::make_shared<sg::node::Vector4>();
+            auto vec4 = std::make_shared<shaderlab::node::Vector4>();
 
             std::string name;
             if (QueryString(src, "name", name)) {
@@ -383,24 +383,24 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         }
             break;
         case aseimp::NodeClass::PI:
-            bp_node = std::make_shared<sg::node::PI>();
+            bp_node = std::make_shared<shaderlab::node::PI>();
             break;
         case aseimp::NodeClass::Color:
-            bp_node = std::make_shared<sg::node::Color>();
+            bp_node = std::make_shared<shaderlab::node::Color>();
             break;
 
             // Image Effects
         case aseimp::NodeClass::HSVToRGB:
-            bp_node = std::make_shared<sg::node::HSVToRGB>();
+            bp_node = std::make_shared<shaderlab::node::HSVToRGB>();
             break;
         case aseimp::NodeClass::RGBToHSV:
-            bp_node = std::make_shared<sg::node::RGBToHSV>();
+            bp_node = std::make_shared<shaderlab::node::RGBToHSV>();
             break;
 
             // Camera And Screen
         case aseimp::NodeClass::ViewDirection:
         {
-            auto view_dir = std::make_shared<sg::node::ViewDirection>();
+            auto view_dir = std::make_shared<shaderlab::node::ViewDirection>();
 
             int view_dir_space;
             if (QueryInt(src, "view_dir_space", view_dir_space))
@@ -408,10 +408,10 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
                 switch (view_dir_space)
                 {
                 case aseimp::ViewSpace::Tangent:
-                    view_dir->SetViewSpace(sg::ViewSpace::Tangent);
+                    view_dir->SetViewSpace(shaderlab::ViewSpace::Tangent);
                     break;
                 case aseimp::ViewSpace::World:
-                    view_dir->SetViewSpace(sg::ViewSpace::World);
+                    view_dir->SetViewSpace(shaderlab::ViewSpace::World);
                     break;
                 }
             }
@@ -427,28 +427,28 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
 
             // Light
         case aseimp::NodeClass::WorldSpaceLightDir:
-            bp_node = std::make_shared<sg::node::WorldSpaceLightDir>();
+            bp_node = std::make_shared<shaderlab::node::WorldSpaceLightDir>();
             break;
         case aseimp::NodeClass::LightAttenuation:
-            bp_node = std::make_shared<sg::node::LightAttenuation>();
+            bp_node = std::make_shared<shaderlab::node::LightAttenuation>();
             break;
         case aseimp::NodeClass::LightColor:
-            bp_node = std::make_shared<sg::node::LightColor>();
+            bp_node = std::make_shared<shaderlab::node::LightColor>();
             break;
         case aseimp::NodeClass::IndirectDiffuseLighting:
-            bp_node = std::make_shared<sg::node::IndirectDiffuseLighting>();
+            bp_node = std::make_shared<shaderlab::node::IndirectDiffuseLighting>();
             break;
         case aseimp::NodeClass::IndirectSpecularLight:
-            bp_node = std::make_shared<sg::node::IndirectSpecularLight>();
+            bp_node = std::make_shared<shaderlab::node::IndirectSpecularLight>();
             break;
 
             // Vector Operators
         case aseimp::NodeClass::Normalize:
-            bp_node = std::make_shared<sg::node::Normalize>();
+            bp_node = std::make_shared<shaderlab::node::Normalize>();
             break;
         case aseimp::NodeClass::ChannelMask:
         {
-            auto cm = std::make_shared<sg::node::ChannelMask>();
+            auto cm = std::make_shared<shaderlab::node::ChannelMask>();
 
             bool r, g, b, a;
             if (QueryBool(src, "r", r) &&
@@ -456,18 +456,18 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
                 QueryBool(src, "b", b) &&
                 QueryBool(src, "a", a))
             {
-                sg::PropMultiChannels c = 0;
+                shaderlab::PropMultiChannels c = 0;
                 if (r) {
-                    c.channels |= sg::PropMultiChannels::CHANNEL_R;
+                    c.channels |= shaderlab::PropMultiChannels::CHANNEL_R;
                 }
                 if (g) {
-                    c.channels |= sg::PropMultiChannels::CHANNEL_G;
+                    c.channels |= shaderlab::PropMultiChannels::CHANNEL_G;
                 }
                 if (b) {
-                    c.channels |= sg::PropMultiChannels::CHANNEL_B;
+                    c.channels |= shaderlab::PropMultiChannels::CHANNEL_B;
                 }
                 if (a) {
-                    c.channels |= sg::PropMultiChannels::CHANNEL_A;
+                    c.channels |= shaderlab::PropMultiChannels::CHANNEL_A;
                 }
                 cm->SetChannels(c);
             }
@@ -476,65 +476,65 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         }
             break;
         case aseimp::NodeClass::DotProduct:
-            bp_node = std::make_shared<sg::node::DotProduct>();
+            bp_node = std::make_shared<shaderlab::node::DotProduct>();
             break;
         case aseimp::NodeClass::Combine:
-            bp_node = std::make_shared<sg::node::Combine>();
+            bp_node = std::make_shared<shaderlab::node::Combine>();
             break;
         case aseimp::NodeClass::Split:
-            bp_node = std::make_shared<sg::node::Split>();
+            bp_node = std::make_shared<shaderlab::node::Split>();
             break;
         case aseimp::NodeClass::TransformDirection:
-            bp_node = std::make_shared<sg::node::TransformDirection>();
+            bp_node = std::make_shared<shaderlab::node::TransformDirection>();
             break;
         case aseimp::NodeClass::Length:
-            bp_node = std::make_shared<sg::node::Length>();
+            bp_node = std::make_shared<shaderlab::node::Length>();
             break;
 
             // Vertex Data
         case aseimp::NodeClass::VertexBitangent:
-            bp_node = std::make_shared<sg::node::VertexBitangent>();
+            bp_node = std::make_shared<shaderlab::node::VertexBitangent>();
             break;
         case aseimp::NodeClass::VertexNormal:
-            bp_node = std::make_shared<sg::node::VertexNormal>();
+            bp_node = std::make_shared<shaderlab::node::VertexNormal>();
             break;
         case aseimp::NodeClass::VertexTangent:
-            bp_node = std::make_shared<sg::node::VertexTangent>();
+            bp_node = std::make_shared<shaderlab::node::VertexTangent>();
             break;
 
             // Surface Data
         case aseimp::NodeClass::WorldBitangent:
-            bp_node = std::make_shared<sg::node::WorldBitangent>();
+            bp_node = std::make_shared<shaderlab::node::WorldBitangent>();
             break;
         case aseimp::NodeClass::WorldPosition:
-            bp_node = std::make_shared<sg::node::WorldPosition>();
+            bp_node = std::make_shared<shaderlab::node::WorldPosition>();
             break;
         case aseimp::NodeClass::WorldTangent:
-            bp_node = std::make_shared<sg::node::WorldTangent>();
+            bp_node = std::make_shared<shaderlab::node::WorldTangent>();
             break;
 
             // Matrix Operators
         case aseimp::NodeClass::MatrixConstruction:
-            bp_node = std::make_shared<sg::node::MatrixConstruction>();
+            bp_node = std::make_shared<shaderlab::node::MatrixConstruction>();
             break;
         case aseimp::NodeClass::MatrixInverse:
-            bp_node = std::make_shared<sg::node::MatrixInverse>();
+            bp_node = std::make_shared<shaderlab::node::MatrixInverse>();
             break;
 
             // Matrix Transform
         case aseimp::NodeClass::ViewMatrix:
-            bp_node = std::make_shared<sg::node::ViewMatrix>();
+            bp_node = std::make_shared<shaderlab::node::ViewMatrix>();
             break;
 
             // UV Coordinates
         case aseimp::NodeClass::TexCoords:
-            bp_node = std::make_shared<sg::node::TexCoords>();
+            bp_node = std::make_shared<shaderlab::node::TexCoords>();
             break;
 
             // Textures
         case aseimp::NodeClass::Tex2DAsset:
         {
-            auto tex = std::make_shared<sg::node::Tex2DAsset>();
+            auto tex = std::make_shared<shaderlab::node::Tex2DAsset>();
 
             std::string tex_guid;
             if (QueryString(src, "material_tex_guid", tex_guid)) {
@@ -549,7 +549,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::SampleTex2D:
         {
-            bp_node = std::make_shared<sg::node::SampleTex2D>();
+            bp_node = std::make_shared<shaderlab::node::SampleTex2D>();
 
             std::string tex_guid;
             if (QueryString(src, "material_tex_guid", tex_guid))
@@ -562,7 +562,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
                     pos.x = src.x - 100;
                     pos.y = -(src.y + st.height * 0.5f) + 50;
 
-                    auto child = std::make_shared<sg::node::Tex2DAsset>();
+                    auto child = std::make_shared<shaderlab::node::Tex2DAsset>();
                     child->SetImagePath(filepath);
                     CreateSceneNode(child, pos);
 
@@ -572,18 +572,18 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         }
             break;
         case aseimp::NodeClass::SampleTriplanar:
-            bp_node = std::make_shared<sg::node::SampleTriplanar>();
+            bp_node = std::make_shared<shaderlab::node::SampleTriplanar>();
             break;
         case aseimp::NodeClass::UnpackScaleNormal:
-            bp_node = std::make_shared<sg::node::UnpackScaleNormal>();
+            bp_node = std::make_shared<shaderlab::node::UnpackScaleNormal>();
             break;
         case aseimp::NodeClass::TextureTransform:
-            bp_node = std::make_shared<sg::node::TextureTransform>();
+            bp_node = std::make_shared<shaderlab::node::TextureTransform>();
             break;
 
             // Surface Data
         case aseimp::NodeClass::WorldNormalVector:
-            bp_node = std::make_shared<sg::node::WorldNormalVector>();
+            bp_node = std::make_shared<shaderlab::node::WorldNormalVector>();
             break;
 
             // Miscellaneous
@@ -613,7 +613,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::CustomExpression:
         {
-            auto custom = std::make_shared<sg::node::Custom>();
+            auto custom = std::make_shared<shaderlab::node::Custom>();
 
             std::string code = CheckString(src, "code");
             for (auto& c : code) {
@@ -631,7 +631,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
                 custom->SetName(custom_expression_name);
             }
 
-            std::vector<sg::Node::PinDesc> inputs, outputs;
+            std::vector<shaderlab::Node::PinDesc> inputs, outputs;
             InputPortASEImpToSG(inputs, src.inputs);
             OutputPortASEImpToSG(outputs, src.outputs);
 
@@ -641,13 +641,13 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         }
             break;
         case aseimp::NodeClass::VertexToFragment:
-            bp_node = std::make_shared<sg::node::VertexToFragment>();
+            bp_node = std::make_shared<shaderlab::node::VertexToFragment>();
             break;
         case aseimp::NodeClass::EncodeFloatRGBA:
-            bp_node = std::make_shared<sg::node::EncodeFloatRGBA>();
+            bp_node = std::make_shared<shaderlab::node::EncodeFloatRGBA>();
             break;
         case aseimp::NodeClass::DecodeFloatRGBA:
-            bp_node = std::make_shared<sg::node::DecodeFloatRGBA>();
+            bp_node = std::make_shared<shaderlab::node::DecodeFloatRGBA>();
             break;
 
             // Tools
@@ -684,7 +684,7 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
             if (QueryInt(src, "light_model", light_model)) {
                 assert(light_model == static_cast<int>(aseimp::StandardShaderLightModel::CustomLighting));
             }
-            bp_node = std::make_shared<sg::node::StandardSurfaceOutput>();
+            bp_node = std::make_shared<shaderlab::node::StandardSurfaceOutput>();
         }
             break;
         }
@@ -724,15 +724,15 @@ void ASEImporter::Load(const ur::Device& dev, const aseimp::FileLoader& loader)
         }
 
         //auto from_type = from->second.dst->get_type();
-        //if (from_type == rttr::type::get<sg::node::Vector2>() ||
-        //    from_type == rttr::type::get<sg::node::Vector3>() ||
-        //    from_type == rttr::type::get<sg::node::Vector4>())
+        //if (from_type == rttr::type::get<shaderlab::node::Vector2>() ||
+        //    from_type == rttr::type::get<shaderlab::node::Vector3>() ||
+        //    from_type == rttr::type::get<shaderlab::node::Vector4>())
         //{
         //    assert(port_to == 0);
         //}
 
         auto to_type = to->second.dst->get_type();
-        if (to_type == rttr::type::get<sg::node::Smoothstep>())
+        if (to_type == rttr::type::get<shaderlab::node::Smoothstep>())
         {
             switch (port_to)
             {
@@ -804,28 +804,28 @@ int ASEImporter::PortTypeASEImpToBP(aseimp::WirePortDataType type)
     switch (type)
     {
     case aseimp::WirePortDataType::FLOAT:
-        ret = sg::PIN_VECTOR1;
+        ret = shaderlab::PIN_VECTOR1;
         break;
     case aseimp::WirePortDataType::FLOAT2:
-        ret = sg::PIN_VECTOR2;
+        ret = shaderlab::PIN_VECTOR2;
         break;
     case aseimp::WirePortDataType::FLOAT3:
-        ret = sg::PIN_VECTOR3;
+        ret = shaderlab::PIN_VECTOR3;
         break;
     case aseimp::WirePortDataType::FLOAT4:
-        ret = sg::PIN_VECTOR4;
+        ret = shaderlab::PIN_VECTOR4;
         break;
     case aseimp::WirePortDataType::COLOR:
-        ret = sg::PIN_COLOR;
+        ret = shaderlab::PIN_COLOR;
         break;
     case aseimp::WirePortDataType::SAMPLER2D:
-        ret = sg::PIN_TEXTURE2D;
+        ret = shaderlab::PIN_TEXTURE2D;
         break;
     case aseimp::WirePortDataType::FLOAT3x3:
-        ret = sg::PIN_MATRIX3;
+        ret = shaderlab::PIN_MATRIX3;
         break;
     case aseimp::WirePortDataType::FLOAT4x4:
-        ret = sg::PIN_MATRIX4;
+        ret = shaderlab::PIN_MATRIX4;
         break;
     case aseimp::WirePortDataType::OBJECT:
         ret = bp::PIN_ANY_VAR;
@@ -836,7 +836,7 @@ int ASEImporter::PortTypeASEImpToBP(aseimp::WirePortDataType type)
     return ret;
 }
 
-void ASEImporter::InputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
+void ASEImporter::InputPortASEImpToSG(std::vector<shaderlab::Node::PinDesc>& dst,
                                       const std::vector<aseimp::FileLoader::InputPort>& src)
 {
     dst.resize(src.size());
@@ -849,7 +849,7 @@ void ASEImporter::InputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
     }
 }
 
-void ASEImporter::OutputPortASEImpToSG(std::vector<sg::Node::PinDesc>& dst,
+void ASEImporter::OutputPortASEImpToSG(std::vector<shaderlab::Node::PinDesc>& dst,
                                        const std::vector<aseimp::FileLoader::OutputPort>& src)
 {
     dst.resize(src.size());
